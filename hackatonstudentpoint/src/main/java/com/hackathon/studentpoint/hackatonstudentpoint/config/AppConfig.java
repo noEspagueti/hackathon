@@ -22,7 +22,7 @@ public class AppConfig {
     @Value("${datasource.url}")
     private String databaseUrl;
 
-    @Bean(Value = "dataSource")
+    @Bean(name = "dataSource")
     public DataSource datasource() {
         final DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");

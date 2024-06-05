@@ -8,12 +8,13 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+
 @RunWith(MockitoJUnitRunner.class)
 class HackatonstudentpointApplicationTests {
 
+
+
 	@Test
-	@Ignore
 	void contextLoads() {
 		Assert.assertTrue(true);
 	}
