@@ -32,7 +32,6 @@ public class AppConfig {
         return driverManagerDataSource;
     }
 
-
     @Bean
     public NamedParameterJdbcTemplate jdbcTemplate(@Qualifier("dataSource") DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
