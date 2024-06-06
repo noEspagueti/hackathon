@@ -22,7 +22,7 @@ public class AppConfig {
     @Value("${datasource.url}")
     private String databaseUrl;
 
-    @Bean(name = "dataSource")
+    @Bean
     public DataSource datasource() {
         final DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
@@ -32,10 +32,6 @@ public class AppConfig {
         return driverManagerDataSource;
     }
 
-    @Bean
-    public NamedParameterJdbcTemplate jdbcTemplate(@Qualifier("dataSource") DataSource dataSource) {
-        return new NamedParameterJdbcTemplate(dataSource);
-    }
 
 
 }
