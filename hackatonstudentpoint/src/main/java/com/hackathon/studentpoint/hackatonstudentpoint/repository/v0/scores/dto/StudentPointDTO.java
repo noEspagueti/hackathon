@@ -2,11 +2,14 @@ package com.hackathon.studentpoint.hackatonstudentpoint.repository.v0.scores.dto
 
 
 public class StudentPointDTO {
+
+
     private int id;
     private int dayId;
     private String studenCode;
     private int points;
     private char type;
+
 
     public int getId() {
         return id;

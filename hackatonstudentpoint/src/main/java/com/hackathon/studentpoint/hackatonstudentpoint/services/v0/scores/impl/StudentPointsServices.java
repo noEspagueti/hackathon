@@ -18,4 +18,16 @@ public class StudentPointsServices implements IStudentPointsServices {
     public StudentPointDTO getStudentPointById(int id) {
         return studentPointsRepository.getStudentPointById(id);
     }
+
+    @Override
+    public void createStudentPoint(StudentPointDTO studentPointDTO) {
+        studentPointsRepository.createStudentPointById(studentPointDTO);
+    }
+
+    @Override
+    public int updateScore(int id, int points) {
+        return studentPointsRepository.updateScore(id, points);
+    }
+
+
 }

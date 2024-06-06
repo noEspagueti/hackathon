@@ -18,4 +18,13 @@ public final class StudentScoreMapper {
         return studentScore;
     }
 
+    public static StudentPointDTO studentScoreTostudentPintDTO(StudentScore studentScore) {
+        StudentPointDTO studentPointDTO = new StudentPointDTO();
+        studentPointDTO.setId(studentScore.getId());
+        studentPointDTO.setStudenCode(studentScore.getStudenCode());
+        studentPointDTO.setType(studentScore.getType());
+        studentPointDTO.setPoints(studentScore.getPoints());
+        studentPointDTO.setDayId(studentScore.getDayId());
+        return studentPointDTO;
+    }
 }

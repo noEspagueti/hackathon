@@ -6,4 +6,6 @@ public interface IStudentPointsServices {
 
     StudentPointDTO getStudentPointById(int id);
 
+    void createStudentPoint(StudentPointDTO studentPointDTO);
+    int updateScore(int id, int points);
 }

@@ -7,6 +7,10 @@ import com.hackathon.studentpoint.hackatonstudentpoint.repository.v0.scores.dto.
 import com.hackathon.studentpoint.hackatonstudentpoint.services.v0.scores.IStudentPointsServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,9 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentScoreFacadeImpl implements IStudentScoreFacade {
 
     private IStudentPointsServices studentPointsServices;
+    private Validator studentScoreValidator;
 
-    public StudentScoreFacadeImpl(IStudentPointsServices studentPointsServices) {
+    public StudentScoreFacadeImpl(IStudentPointsServices studentPointsServices, Validator studentScoreValidator) {
         this.studentPointsServices = studentPointsServices;
+        this.studentScoreValidator = studentScoreValidator;
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(studentScoreValidator);
     }
 
     @Override
@@ -27,4 +38,26 @@ public class StudentScoreFacadeImpl implements IStudentScoreFacade {
         StudentScore studentScore = StudentScoreMapper.studentPintDTOToStudentScore(studentPointDTO);
         return new ResponseEntity<>(studentScore, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<String> createStudentScore(StudentScore studentScore, BindingResult bindingResult) {
+        StudentPointDTO studentPointDTO = StudentScoreMapper.studentScoreTostudentPintDTO(studentScore);
+        studentPointsServices.createStudentPoint(studentPointDTO);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("Error de validación: " + bindingResult.getAllErrors());
+        }
+        return ResponseEntity.ok("[SUCCESS] {" + studentPointDTO.toString() + "}");
+    }
+
+    @Override
+    public ResponseEntity<String> updatePointsPerStudent(int id, StudentScore studentPointDTO) {
+        int scores = studentPointDTO.getPoints();
+        int result = studentPointsServices.updateScore(studentPointDTO.getId(), scores);
+        if (result == 0) {
+            return ResponseEntity.badRequest().body("[ERROR][Has ocurred an error]");
+        }
+        return ResponseEntity.ok("[SUCCESS UPDATE] {" + studentPointDTO.toString() + "}");
+    }
+
+
 }
